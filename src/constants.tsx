@@ -1,10 +1,10 @@
 export const walletGroupsArray = [
   {
-    groupName: "Airdrop people",
+    groupName: "Uniswap LP Newsletter",
     recipientAddresses: ["0x937C0d4a6294cdfa575de17382c7076b579DC176"],
   },
   {
-    groupName: "Some group nr 2",
+    groupName: "Uniswap DAO Newsletter",
     recipientAddresses: ["0x937C0d4a6294cdfa575de17382c7076b579DC176"],
   },
 ];
