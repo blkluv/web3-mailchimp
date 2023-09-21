@@ -1,3 +1,4 @@
+import { ConnectWallet } from "@thirdweb-dev/react";
 import Email from "./pages/Email";
 import Home from "./pages/Home";
 import "./styles/Home.css";
@@ -9,6 +10,14 @@ export default function App() {
   return (
     <Router>
       <main className="main">
+        <div className="connect">
+          <ConnectWallet
+            dropdownPosition={{
+              side: "bottom",
+              align: "center",
+            }}
+          />
+        </div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />

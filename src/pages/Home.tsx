@@ -1,5 +1,3 @@
-import { ConnectWallet } from "@thirdweb-dev/react";
-
 export default function Home() {
   return (
     <div className="container">
@@ -18,15 +16,6 @@ export default function Home() {
           <code className="code">src/index.js</code>, then modify the{" "}
           <code className="code">src/App.js</code> file!
         </p>
-
-        <div className="connect">
-          <ConnectWallet
-            dropdownPosition={{
-              side: "bottom",
-              align: "center",
-            }}
-          />
-        </div>
       </div>
 
       <div className="grid">
