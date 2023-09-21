@@ -158,6 +158,7 @@
   width: 100%;
   background-color: #272c34;
   height: 700px;
+  position: relative;
 
   text-align: left;
   color: inherit;
@@ -178,6 +179,10 @@
 
 .flex-direction-row {
   flex-direction: row;
+  display: flex;
+}
+.flex-direction-col {
+  flex-direction: column;
   display: flex;
 }
 
@@ -211,4 +216,13 @@
   background-color: transparent;
   width: 100%;
   height: 90%;
+}
+
+.btn-bottom {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 100px;
+  height: 30px;
+  color: white;
 }

@@ -6,7 +6,12 @@ prxshant.eth / 0x4b70d04124c2996De29e0caa050A49822Faec6Cc
 import { Wallet } from "ethers";
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { FormEvent, useEffect, useState } from "react";
-import { useClient } from "@xmtp/react-sdk";
+import {
+  useCanMessage,
+  useClient,
+  useConversations,
+  useStartConversation,
+} from "@xmtp/react-sdk";
 import { walletGroupsArray } from "../constants";
 
 interface Group {
@@ -18,7 +23,10 @@ interface Group {
 }
 
 export default function Email() {
-  const { client } = useClient();
+  const { client, initialize } = useClient();
+  const { conversations } = useConversations();
+  const { startConversation } = useStartConversation();
+  const { canMessage } = useCanMessage();
   const [recipientGroup, setRecipientGroup] = useState<Group | null>(null);
   const [emailText, setEmailText] = useState<string | null>(null);
 
@@ -31,6 +39,24 @@ export default function Email() {
 
   const handleEmailText = (text: string) => {
     setEmailText(text);
+  };
+  const handleSendEmail = async () => {
+    const options = {
+      persistConversations: false,
+      env: "dev",
+    };
+    //await initialize({ keys, options, signer });
+    console.log(client, "xmtp client");
+    try {
+      if (await canMessage("0xb81B9B88e764cb6b4E02c5D0F6D6D9051A61E020")) {
+        const conversation = await startConversation(
+          "0xb81B9B88e764cb6b4E02c5D0F6D6D9051A61E020",
+          emailText
+        );
+      }
+    } catch (e) {
+      console.log(e, "xmtp error");
+    }
   };
 
   console.log(emailText, "emailtexttt");
@@ -78,8 +104,11 @@ export default function Email() {
           className="text-area-email flex-direction-row"
           value={emailText ?? ""}
           onChange={(e) => handleEmailText(e.target.value)}
-          placeholder="Add your text here..."
+          placeholder="Write your email here..."
         />
+        <button onClick={() => handleSendEmail()} className="code btn-bottom">
+          SEND
+        </button>
       </div>
 
       <div className="grid">
