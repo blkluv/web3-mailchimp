@@ -3,16 +3,18 @@
 Get an immediate response from the XMTP message bot
 prxshant.eth / 0x4b70d04124c2996De29e0caa050A49822Faec6Cc
  */
-import { Wallet } from "ethers";
+import { Wallet, ethers } from "ethers";
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { FormEvent, useEffect, useState } from "react";
 import {
+  Client,
   useCanMessage,
   useClient,
   useConversations,
   useStartConversation,
 } from "@xmtp/react-sdk";
 import { walletGroupsArray } from "../constants";
+import { shortenAddress } from "../utils";
 
 interface Group {
   group: {
@@ -29,9 +31,13 @@ export default function Email() {
   const { canMessage } = useCanMessage();
   const [recipientGroup, setRecipientGroup] = useState<Group | null>(null);
   const [emailText, setEmailText] = useState<string | null>(null);
+  const [provider, setProvider] = useState<any | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {};
+    const fetchData = async () => {
+      const _provider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(_provider);
+    };
     fetchData();
   }, []);
 
@@ -41,18 +47,30 @@ export default function Email() {
     setEmailText(text);
   };
   const handleSendEmail = async () => {
-    const options = {
-      persistConversations: false,
-      env: "dev",
-    };
-    //await initialize({ keys, options, signer });
-    console.log(client, "xmtp client");
+    const signer = provider.getSigner();
+    console.log(signer, "ethers signer");
+
+    // initialize client
+    const clientReady = await initialize({
+      keys: undefined,
+      options: {
+        persistConversations: false,
+        env: "dev",
+      },
+      signer,
+    });
+    console.log(clientReady, "xmtp client");
     try {
-      if (await canMessage("0xb81B9B88e764cb6b4E02c5D0F6D6D9051A61E020")) {
+      const addressIsOnXmtp = await Client.canMessage(
+        "0xdC25482eB1094F1F50119F45f799250b0a5622AF"
+      );
+      console.log(addressIsOnXmtp, "address is?");
+      if (addressIsOnXmtp) {
         const conversation = await startConversation(
-          "0xb81B9B88e764cb6b4E02c5D0F6D6D9051A61E020",
+          "0xdC25482eB1094F1F50119F45f799250b0a5622AF",
           emailText
         );
+        console.log("cONVERSATIOn msg?", conversation);
       }
     } catch (e) {
       console.log(e, "xmtp error");
@@ -72,7 +90,10 @@ export default function Email() {
       >
         <b>{group.groupName} </b>
         <div onClick={() => setRecipientGroup({ group: group, index })}>
-          Addresses: {group.recipientAddresses.map((address) => address)}
+          Addresses:{" "}
+          {group.recipientAddresses.map(
+            (address) => shortenAddress(address) + ", "
+          )}
         </div>
       </div>
     ));
