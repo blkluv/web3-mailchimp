@@ -16,6 +16,10 @@ import {
 import { walletGroupsArray } from "../constants";
 import { shortenAddress } from "../utils";
 
+//const walletAddress = "0x937C0d4a6294cdfa575de17382c7076b579DC176"; //xmtp tester wallet
+//const walletAddress = "0xdC25482eB1094F1F50119F45f799250b0a5622AF"; // tommys wallet
+const walletAddress = "0xe7910F0b83ad155737043c771E2594f74B0BB739"; //my own wallet but on Chrome
+
 interface Group {
   group: {
     groupName: string;
@@ -32,52 +36,50 @@ export default function Email() {
   const [recipientGroup, setRecipientGroup] = useState<Group | null>(null);
   const [emailText, setEmailText] = useState<string | null>(null);
   const [provider, setProvider] = useState<any | null>(null);
+  const [xmtpClient, setXmtpClient] = useState<any | null>(null);
+  const [conversation, setConversation] = useState<any | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const _provider = new ethers.providers.Web3Provider(window.ethereum);
       setProvider(_provider);
+      const _xmtpClient = await Client.create(_provider.getSigner(), {
+        env: "production",
+      });
+      setXmtpClient(_xmtpClient);
+      console.log("Client Created BÄ", _xmtpClient?.address);
+      if (_xmtpClient?.address) {
+        const isOnDevNetwork = await _xmtpClient.canMessage(walletAddress);
+        console.log("Is on devnetwork?", isOnDevNetwork);
+      }
     };
     fetchData();
   }, []);
-
-  console.log(recipientGroup, "SELECTED RECIP group");
 
   const handleEmailText = (text: string) => {
     setEmailText(text);
   };
   const handleSendEmail = async () => {
-    const signer = provider.getSigner();
-    console.log(signer, "ethers signer");
-
-    // initialize client
-    const clientReady = await initialize({
-      keys: undefined,
-      options: {
-        persistConversations: false,
-        env: "dev",
-      },
-      signer,
-    });
-    console.log(clientReady, "xmtp client");
     try {
-      const addressIsOnXmtp = await Client.canMessage(
-        "0xdC25482eB1094F1F50119F45f799250b0a5622AF"
-      );
+      const addressIsOnXmtp = await xmtpClient.canMessage(walletAddress);
       console.log(addressIsOnXmtp, "address is?");
       if (addressIsOnXmtp) {
-        const conversation = await startConversation(
-          "0xdC25482eB1094F1F50119F45f799250b0a5622AF",
-          emailText
+        const _conversation = await xmtpClient.conversations.newConversation(
+          walletAddress
         );
-        console.log("cONVERSATIOn msg?", conversation);
+        console.log(
+          "Conversation started recipient:",
+          _conversation.peerAddress
+        );
+        setConversation(_conversation);
+        const message = await _conversation.send(emailText);
+        console.log("Sent message", message);
       }
     } catch (e) {
       console.log(e, "xmtp error");
     }
   };
 
-  console.log(emailText, "emailtexttt");
   const renderWalletGroups = () => {
     return walletGroupsArray.map((group, index) => (
       <div
