@@ -216,6 +216,8 @@
   background-color: transparent;
   width: 100%;
   height: 90%;
+  font-family: "Inter", sans-serif !important;
+  color: "white" !important;
 }
 
 .btn-bottom {
@@ -225,4 +227,66 @@
   width: 100px;
   height: 30px;
   color: white;
+}
+
+.modalRow {
+  flex: 1;
+  flex-direction: row;
+  margin-bottom: 15px;
+}
+
+.modalTerms {
+  font-family: "Sora";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+
+  text-align: center;
+  text-decoration: underline;
+  color: #878787;
+}
+
+.modalTerms:hover {
+  color: #878787;
+}
+
+.modal-close-x {
+  position: absolute;
+  top: 25px;
+  right: 25px;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+/* WaveWrld/Modal header */
+.custom-modal {
+  top: 0;
+  left: 0;
+  max-width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.custom-modal .modal-content {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+.modal-content {
+  max-width: 80%;
+  min-width: 80vw;
+  min-height: 40vh;
+  overflow: auto;
+}
+
+.modal-header-text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 64px;
+  text-align: center;
+  color: #e0e0e0;
 }

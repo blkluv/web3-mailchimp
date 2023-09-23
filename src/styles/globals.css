@@ -5,6 +5,8 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Inter", sans-serif;
+  color: #e7e8e8;
+  background: #070707;
 }
 
 a {
@@ -17,6 +19,10 @@ a {
 }
 
 body {
+  color: #e7e8e8;
+  background: #070707;
+}
+main {
   color: #e7e8e8;
   background: #070707;
 }
