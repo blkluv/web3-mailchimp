@@ -4,6 +4,8 @@ Get an immediate response from the XMTP message bot
 prxshant.eth / 0x4b70d04124c2996De29e0caa050A49822Faec6Cc
  */
 import { Wallet, ethers } from "ethers";
+import cron from "node-cron";
+
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { FormEvent, useEffect, useState } from "react";
 import {
@@ -14,7 +16,8 @@ import {
   useStartConversation,
 } from "@xmtp/react-sdk";
 import { walletGroupsArray } from "../constants";
-import { shortenAddress } from "../utils";
+import { scheduleCronJob, sendEmail, shortenAddress } from "../utils";
+import Scheduler from "../components/SelectCronInterval";
 
 //const walletAddress = "0x937C0d4a6294cdfa575de17382c7076b579DC176"; //xmtp tester wallet
 //const walletAddress = "0xdC25482eB1094F1F50119F45f799250b0a5622AF"; // tommys wallet
@@ -38,6 +41,7 @@ export default function Email() {
   const [provider, setProvider] = useState<any | null>(null);
   const [xmtpClient, setXmtpClient] = useState<any | null>(null);
   const [conversation, setConversation] = useState<any | null>(null);
+  const [selectedInterval, setSelectedInterval] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,25 +63,12 @@ export default function Email() {
   const handleEmailText = (text: string) => {
     setEmailText(text);
   };
-  const handleSendEmail = async () => {
-    try {
-      const addressIsOnXmtp = await xmtpClient.canMessage(walletAddress);
-      console.log(addressIsOnXmtp, "address is?");
-      if (addressIsOnXmtp) {
-        const _conversation = await xmtpClient.conversations.newConversation(
-          walletAddress
-        );
-        console.log(
-          "Conversation started recipient:",
-          _conversation.peerAddress
-        );
-        setConversation(_conversation);
-        const message = await _conversation.send(emailText);
-        console.log("Sent message", message);
-      }
-    } catch (e) {
-      console.log(e, "xmtp error");
-    }
+
+  const handleSendEmail = async () => {};
+
+  const handleScheduleChange = (interval: string) => {
+    setSelectedInterval(interval);
+    scheduleCronJob(interval); //
   };
 
   const renderWalletGroups = () => {
@@ -132,6 +123,7 @@ export default function Email() {
         <button onClick={() => handleSendEmail()} className="code btn-bottom">
           SEND
         </button>
+        <Scheduler onScheduleChange={handleScheduleChange} />
       </div>
 
       <div className="grid">
