@@ -1,8 +1,18 @@
 import { useContext, useEffect } from "react";
 import { Modal } from "react-bootstrap";
+import { getMaticBalances } from "../utils";
 
 export const CustomModal = (props: any) => {
-  const { setShow, show, emailText, setInterval, interval } = props;
+  const {
+    setShow,
+    show,
+    count,
+    emailText,
+    setInterval,
+    interval,
+    recipientGroup,
+    provider,
+  } = props;
 
   const handleClose = () => {
     setShow(false);
@@ -12,7 +22,13 @@ export const CustomModal = (props: any) => {
     setInterval(10); // every fifteen minutes
   };
 
-  const handleSendToFiltered = () => {
+  const handleSendToFiltered = async () => {
+    console.log(recipientGroup, "recip group");
+    const filteredWallets = await getMaticBalances(
+      recipientGroup.group.recipientAddresses,
+      provider
+    );
+    console.log(filteredWallets, "FILTERED WALLETS");
     //set a filter here for the wallet addresses that is passed in thru props
   };
 
@@ -33,6 +49,7 @@ export const CustomModal = (props: any) => {
           <p className="p-2">
             Select how you want to send the email with these two options:
           </p>
+          <p>Emails sent: {count}</p>
           <button
             className="btn btn-secondary m-5"
             onClick={handleSendEveryMinutes}

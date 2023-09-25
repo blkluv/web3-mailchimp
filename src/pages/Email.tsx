@@ -36,18 +36,18 @@ export default function Email() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [interval, setInterval] = useState<number | null>(null);
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       if (!xmtpClient) {
-        const _provider = new ethers.providers.Web3Provider(window.ethereum);
+        /*   const _provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(_provider);
         const _xmtpClient = await Client.create(_provider.getSigner(), {
           env: "production",
         });
-        setXmtpClient(_xmtpClient);
+        setXmtpClient(_xmtpClient); */
       }
     };
     fetchData();
@@ -82,12 +82,14 @@ export default function Email() {
     isRunning ? interval : null
   );
 
+  console.log(recipientGroup?.group.groupName, "groupname?");
   const renderWalletGroups = () => {
     return walletGroupsArray.map((group, index) => (
       <div
+        onClick={() => setRecipientGroup({ group: group, index })}
         style={
           recipientGroup?.group.groupName === group.groupName
-            ? { backgroundColor: "#9b67a9" }
+            ? { backgroundColor: "grey" }
             : {}
         }
         className="group-list"
@@ -137,8 +139,6 @@ export default function Email() {
         >
           <b>SEND</b>
         </button>
-        {/*         <Scheduler onScheduleChange={handleScheduleChange} />
-         */}{" "}
         {errorMsg && <p className="error-bottom">{errorMsg}</p>}
       </div>
 
@@ -148,9 +148,10 @@ export default function Email() {
         setInterval={setInterval}
         interval={interval}
         setShow={setShowModal}
-      >
-        Bää custom modal
-      </CustomModal>
+        count={count}
+        provider={provider}
+        recipientGroup={recipientGroup}
+      />
     </div>
   );
 }
