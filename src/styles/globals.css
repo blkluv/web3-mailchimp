@@ -5,8 +5,9 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Inter", sans-serif;
-  color: #e7e8e8;
-  background: #070707;
+  color: #131418;
+  background: #e7e8e8;
+  font-weight: 500;
 }
 
 a {
@@ -19,10 +20,26 @@ a {
 }
 
 body {
-  color: #e7e8e8;
-  background: #070707;
+  color: #131418;
+  background: #e7e8e8;
 }
 main {
-  color: #e7e8e8;
-  background: #070707;
+  color: #131418;
+  background: #e7e8e8;
+  font-weight: 500;
+}
+textarea,
+textarea:focus,
+textarea:active {
+  border: none !important;
+  resize: none !important;
+  outline: none !important;
+  border-style: none !important;
+  border-color: Transparent !important;
+  overflow: auto !important;
+  box-shadow: none !important;
+}
+
+a {
+  text-decoration: none !important;
 }

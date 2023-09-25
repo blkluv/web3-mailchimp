@@ -34,7 +34,8 @@
     "@types/jest": "^27.5.1",
     "@types/node": "^18.0.35",
     "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@types/react-dom": "^18",
+    "html-webpack-plugin": "^5.5.3"
   },
   "scripts": {
     "start": "react-scripts start",

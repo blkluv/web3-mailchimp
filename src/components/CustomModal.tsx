@@ -11,7 +11,11 @@ export const CustomModal = (props: any) => {
   return (
     <>
       <Modal show={show} onHide={handleClose} dialogClassName="custom-modal">
-        <button className="modal-close-x" onClick={handleClose}>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={handleClose}
+        >
           Close
         </button>
 
@@ -21,8 +25,8 @@ export const CustomModal = (props: any) => {
           <p className="p-5">
             Select how you want to send the email with these two options:
           </p>
-          <button className="btn-light">Send every 15 minutes</button>
-          <button className="btn-light">
+          <button className="btn btn-secondary">Send every 15 minutes</button>
+          <button className="btn btn-secondary">
             Send only to wallet addresses with more than 15 MATIC
           </button>
 

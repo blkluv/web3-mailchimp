@@ -10,6 +10,25 @@ export default function App() {
   return (
     <Router>
       <main className="main">
+        <div className="flex-direction-row navbar-top">
+          <a href="/email">
+            <div className="card-text">
+              <h2 className="gradient-text-1">Email ➜</h2>
+            </div>
+          </a>
+
+          <a href="/">
+            <div className="card-text">
+              <h2 className="gradient-text-2">Home</h2>
+            </div>
+          </a>
+
+          <a href="/about">
+            <div className="card-text">
+              <h2 className="gradient-text-3">About</h2>
+            </div>
+          </a>
+        </div>
         <div className="connect">
           <ConnectWallet
             dropdownPosition={{

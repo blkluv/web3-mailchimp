@@ -47,12 +47,12 @@ export default function Email() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const _provider = new ethers.providers.Web3Provider(window.ethereum);
+      /*   const _provider = new ethers.providers.Web3Provider(window.ethereum);
       setProvider(_provider);
       const _xmtpClient = await Client.create(_provider.getSigner(), {
         env: "production",
       });
-      setXmtpClient(_xmtpClient);
+      setXmtpClient(_xmtpClient); */
     };
     fetchData();
   }, []);
@@ -119,50 +119,19 @@ export default function Email() {
         {" "}
         <div className="group-container ">{renderWalletGroups()} </div>
         <textarea
-          className=" text-area-email flex-direction-row"
+          className=" form-control text-area-email flex-direction-row"
           value={emailText ?? ""}
           onChange={(e) => handleEmailText(e.target.value)}
           placeholder="Write your email here..."
         />
-        <button onClick={() => handleSendEmail()} className="code btn-bottom">
-          SEND
+        <button
+          onClick={() => handleSendEmail()}
+          className=" btn-bottom btn btn-secondary"
+        >
+          <b>SEND</b>
         </button>
-        <Scheduler onScheduleChange={handleScheduleChange} />
-      </div>
-
-      <div className="grid">
-        <a href="/email" className="card">
-          <img
-            src="/images/portal-preview.png"
-            alt="Placeholder preview of starter"
-          />
-          <div className="card-text">
-            <h2 className="gradient-text-1">Email ➜</h2>
-            <p>Email</p>
-          </div>
-        </a>
-
-        <a href="/" className="card">
-          <img
-            src="/images/dashboard-preview.png"
-            alt="Placeholder preview of starter"
-          />
-          <div className="card-text">
-            <h2 className="gradient-text-2">Home</h2>
-            <p>Home page</p>
-          </div>
-        </a>
-
-        <a href="/about" className="card">
-          <img
-            src="/images/templates-preview.png"
-            alt="Placeholder preview of templates"
-          />
-          <div className="card-text">
-            <h2 className="gradient-text-3">About</h2>
-            <p>About this application</p>
-          </div>
-        </a>
+        {/*         <Scheduler onScheduleChange={handleScheduleChange} />
+         */}{" "}
       </div>
 
       <CustomModal show={showModal} setShow={setShowModal}>
