@@ -227,6 +227,20 @@
   color: white;
 }
 
+.error-bottom {
+  position: absolute;
+  right: 150px;
+  bottom: 0px;
+
+  color: purple;
+}
+
+.handle-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
 .modalRow {
   flex: 1;
   flex-direction: row;

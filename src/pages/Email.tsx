@@ -44,6 +44,8 @@ export default function Email() {
   const [conversation, setConversation] = useState<any | null>(null);
   const [selectedInterval, setSelectedInterval] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [errorMsg, setErrorMsg] = useState<string>("");
+  const [showError, setShowError] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,7 +64,15 @@ export default function Email() {
   };
 
   const handleSendEmail = async () => {
-    setShowModal(true);
+    if (emailText) {
+      setShowModal(true);
+    } else {
+      setErrorMsg("You have to write an email!");
+      setShowError(true); // Show the error message
+      setTimeout(() => {
+        setShowError(false); // Hide the error message after 3 seconds
+      }, 3000); // 3000 milliseconds (3 seconds)
+    }
   };
 
   const handleScheduleChange = (interval: string) => {
@@ -132,9 +142,14 @@ export default function Email() {
         </button>
         {/*         <Scheduler onScheduleChange={handleScheduleChange} />
          */}{" "}
+        {showError && <p className="error-bottom">{errorMsg}</p>}
       </div>
 
-      <CustomModal show={showModal} setShow={setShowModal}>
+      <CustomModal
+        emailText={emailText}
+        show={showModal}
+        setShow={setShowModal}
+      >
         Bää custom modal
       </CustomModal>
     </div>
