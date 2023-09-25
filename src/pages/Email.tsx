@@ -46,6 +46,7 @@ export default function Email() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [showError, setShowError] = useState<boolean>(false);
+  const [interval, setInterval] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -78,11 +79,13 @@ export default function Email() {
   const handleScheduleChange = (interval: string) => {
     setSelectedInterval(interval);
   };
+
   useInterval(
     () => {
       //fetchApiData();
-    }
-    //set interval here
+      // setCount(count + 1);
+    },
+    interval // interval
   );
 
   const renderWalletGroups = () => {
@@ -120,7 +123,7 @@ export default function Email() {
 
         <p className="description">
           Get started by typing your newsletter below in the{" "}
-          <code className="code">text-box</code>, then send out with the{" "}
+          <code className="code">text-box</code> then send out with the{" "}
           <code className="code">send</code> button!
         </p>
       </div>
@@ -148,6 +151,8 @@ export default function Email() {
       <CustomModal
         emailText={emailText}
         show={showModal}
+        setInterval={setInterval}
+        interval={interval}
         setShow={setShowModal}
       >
         Bää custom modal

@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 
 export const CustomModal = (props: any) => {
-  const { content, setShow, show, emailText } = props;
+  const { content, setShow, show, emailText, setInterval, interval } = props;
 
   const handleClose = () => {
     setShow(false);
