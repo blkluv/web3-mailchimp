@@ -119,7 +119,7 @@ export default function Email() {
         {" "}
         <div className="group-container ">{renderWalletGroups()} </div>
         <textarea
-          className="text-area-email flex-direction-row"
+          className=" text-area-email flex-direction-row"
           value={emailText ?? ""}
           onChange={(e) => handleEmailText(e.target.value)}
           placeholder="Write your email here..."
