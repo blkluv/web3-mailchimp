@@ -19,3 +19,28 @@ export const getMaticBalances = async () => {
             tokenContractAddress: tokenContractAddress,
         }; */
 }
+
+export const sendEmail = async (xmtpClient: any, walletAddress: string, emailText: string | null) => {
+    console.log('Inside sendEmail()')
+    try {
+        if (emailText && walletAddress) {
+            const addressIsOnXmtp = await xmtpClient.canMessage(walletAddress);
+            console.log(addressIsOnXmtp, "Can you message this walletaddress? XMTP");
+            if (addressIsOnXmtp) {
+                const _conversation = await xmtpClient.conversations.newConversation(
+                    walletAddress
+                );
+                console.log(
+                    "Conversation started recipient: XMTP",
+                    _conversation.peerAddress
+                );
+                //setConversation(_conversation);
+                const message = await _conversation.send(emailText);
+                console.log("Sent message XMTP", message);
+            }
+        }
+
+    } catch (e) {
+        console.log(e, "xmtp error");
+    }
+}

@@ -10,6 +10,7 @@ export default function App() {
   return (
     <Router>
       <main className="main">
+        {/* navbar */}
         <div className="flex-direction-row navbar-top">
           <a href="/email">
             <div className="card-text">
@@ -29,6 +30,7 @@ export default function App() {
             </div>
           </a>
         </div>
+        {/* navbar end*/}
         <div className="connect">
           <ConnectWallet
             dropdownPosition={{

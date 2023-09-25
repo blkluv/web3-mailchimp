@@ -6,19 +6,13 @@ prxshant.eth / 0x4b70d04124c2996De29e0caa050A49822Faec6Cc
 import { Wallet, ethers } from "ethers";
 
 import { ConnectWallet } from "@thirdweb-dev/react";
-import { FormEvent, useEffect, useState } from "react";
-import {
-  Client,
-  useCanMessage,
-  useClient,
-  useConversations,
-  useStartConversation,
-} from "@xmtp/react-sdk";
+import { FormEvent, useEffect, useRef, useState } from "react";
+
 import { walletGroupsArray } from "../constants";
-import { shortenAddress } from "../utils";
-import Scheduler from "../components/SelectCronInterval";
+import { sendEmail, shortenAddress } from "../utils";
 import { useInterval } from "../hooks/useInterval";
 import { CustomModal } from "../components/CustomModal";
+import { Client } from "@xmtp/react-sdk";
 
 //const walletAddress = "0x937C0d4a6294cdfa575de17382c7076b579DC176"; //xmtp tester wallet
 //const walletAddress = "0xdC25482eB1094F1F50119F45f799250b0a5622AF"; // tommys wallet
@@ -33,10 +27,6 @@ interface Group {
 }
 
 export default function Email() {
-  const { client, initialize } = useClient();
-  const { conversations } = useConversations();
-  const { startConversation } = useStartConversation();
-  const { canMessage } = useCanMessage();
   const [recipientGroup, setRecipientGroup] = useState<Group | null>(null);
   const [emailText, setEmailText] = useState<string | null>(null);
   const [provider, setProvider] = useState<any | null>(null);
@@ -45,19 +35,27 @@ export default function Email() {
   const [selectedInterval, setSelectedInterval] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>("");
-  const [showError, setShowError] = useState<boolean>(false);
   const [interval, setInterval] = useState<number | null>(null);
+  const [count, setCount] = useState(1);
+  const [isRunning, setIsRunning] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      /*   const _provider = new ethers.providers.Web3Provider(window.ethereum);
-      setProvider(_provider);
-      const _xmtpClient = await Client.create(_provider.getSigner(), {
-        env: "production",
-      });
-      setXmtpClient(_xmtpClient); */
+      if (!xmtpClient) {
+        const _provider = new ethers.providers.Web3Provider(window.ethereum);
+        setProvider(_provider);
+        const _xmtpClient = await Client.create(_provider.getSigner(), {
+          env: "production",
+        });
+        setXmtpClient(_xmtpClient);
+      }
     };
     fetchData();
+  }, [interval]);
+
+  //Fetch on mounting component
+  useEffect(() => {
+    //fetchApiData();
   }, []);
 
   const handleEmailText = (text: string) => {
@@ -69,23 +67,19 @@ export default function Email() {
       setShowModal(true);
     } else {
       setErrorMsg("You have to write an email!");
-      setShowError(true); // Show the error message
       setTimeout(() => {
-        setShowError(false); // Hide the error message after 3 seconds
-      }, 3000); // 3000 milliseconds (3 seconds)
+        setErrorMsg("");
+      }, 3000);
     }
-  };
-
-  const handleScheduleChange = (interval: string) => {
-    setSelectedInterval(interval);
   };
 
   useInterval(
     () => {
+      sendEmail(xmtpClient, walletAddress, emailText);
       //fetchApiData();
-      // setCount(count + 1);
+      setCount(count + 1);
     },
-    interval // interval
+    isRunning ? interval : null
   );
 
   const renderWalletGroups = () => {
@@ -145,7 +139,7 @@ export default function Email() {
         </button>
         {/*         <Scheduler onScheduleChange={handleScheduleChange} />
          */}{" "}
-        {showError && <p className="error-bottom">{errorMsg}</p>}
+        {errorMsg && <p className="error-bottom">{errorMsg}</p>}
       </div>
 
       <CustomModal

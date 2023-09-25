@@ -1,6 +1,6 @@
 {
-  "short_name": "react-typescript-starter",
-  "name": "thirdweb starter project with React & TypeScript",
+  "short_name": "Web3-Mailchimp",
+  "name": "Web3-Mailchimp with XMTP",
   "icons": [
     {
       "src": "favicon.ico",
