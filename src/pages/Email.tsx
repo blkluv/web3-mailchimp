@@ -86,6 +86,7 @@ export default function Email() {
   const renderWalletGroups = () => {
     return walletGroupsArray.map((group, index) => (
       <div
+        key={index}
         onClick={() => setRecipientGroup({ group: group, index })}
         style={
           recipientGroup?.group.groupName === group.groupName

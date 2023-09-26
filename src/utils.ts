@@ -8,47 +8,45 @@ export const shortenAddress = (address: string): string => {
 }
 
 
-export const getMaticBalances = async (walletArray: string[], provider: ethers.providers.JsonRpcProvider) => {
+export const getUSDTBalance = async (walletAddresses: string[]) => {
+    const chain = 'eth';
+    const tokenAddress = '0xdac17f958d2ee523a2206206994597c13d831ec7'; // USDT token address
+    const headers = {
+        accept: 'application/json',
+        'X-API-Key': process.env.REACT_APP_MORALIS_KEY,
+    } as HeadersInit;
+
+    const balances: Record<string, number> = {};
+    const balancesArray = [];
+
     try {
-        const balances = await Promise.all(
-            walletArray.map(async (address) => {
-                try {
-                    const contract = new ethers.Contract(maticTokenContractAddressOnEthereum, genericERC20Abi, provider);
+        for (const walletAddress of walletAddresses) {
+            console.log(walletAddress, 'MORALIS wallet address')
+            const apiUrl = `https://deep-index.moralis.io/api/v2.2/${walletAddress}/erc20?chain=${chain}&token_addresses%5B0%5D=${maticTokenContractAddressOnEthereum}`;
+            const response = await fetch(apiUrl, { headers });
 
-                    const balanceInWei = await contract.balanceOf("0xe7910F0b83ad155737043c771E2594f74B0BB739");
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
 
-                    if (balanceInWei == null) {
-                        // Handle null or undefined values
-                        return null;
-                    }
-
-                    const balanceInToken = ethers.utils.formatUnits(balanceInWei, 18); // Assuming MATIC has 18 decimal places
-
-                    return {
-                        address,
-                        balance: parseFloat(balanceInToken),
-                    };
-                } catch (error) {
-                    console.error(`Error fetching balance for address ${address}:`, error);
-                    return null; // Handle the error gracefully and return null for this address
+            const data = await response.json();
+            console.log(data, 'data?? MORALIS', data[0])
+            if (data.length) {
+                const balance = Number(data[0].balance);
+                if (balance > 0) {
+                    // Add the wallet address and balance to the result if it has a positive balance
+                    balances[walletAddress] = balance;
                 }
-            })
-        );
+            }
 
-        // Filter out null values and wallets with positive and non-zero balances
-        const filteredBalances = balances.filter((balance) => balance !== null && balance.balance > 0);
+        }
 
-        return filteredBalances;
+        return balances;
     } catch (error) {
-        console.error("Error in getMaticBalances:", error);
-        return []; // Return an empty array or handle the error as needed
+        console.error('Error:', error);
+        return null;
     }
 };
-
-
-
-
-
 
 
 

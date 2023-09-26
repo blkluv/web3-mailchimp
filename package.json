@@ -17,6 +17,7 @@
     "ethers": "^5",
     "http": "npm:http-browserify",
     "http-browserify": "latest",
+    "dotenv": "^16.0.0",
     "https": "npm:https-browserify",
     "https-browserify": "latest",
     "react": "^18.2",

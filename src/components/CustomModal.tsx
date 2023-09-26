@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import { getMaticBalances } from "../utils";
+import { getUSDTBalance } from "../utils";
 
 export const CustomModal = (props: any) => {
   const {
@@ -24,9 +24,8 @@ export const CustomModal = (props: any) => {
 
   const handleSendToFiltered = async () => {
     console.log(recipientGroup, "recip group");
-    const filteredWallets = await getMaticBalances(
-      recipientGroup.group.recipientAddresses,
-      provider
+    const filteredWallets = await getUSDTBalance(
+      recipientGroup.group.recipientAddresses
     );
     console.log(filteredWallets, "FILTERED WALLETS");
     //set a filter here for the wallet addresses that is passed in thru props
