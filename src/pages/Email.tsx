@@ -3,16 +3,15 @@
 Get an immediate response from the XMTP message bot
 prxshant.eth / 0x4b70d04124c2996De29e0caa050A49822Faec6Cc
  */
-import { Wallet, ethers } from "ethers";
 
-import { ConnectWallet } from "@thirdweb-dev/react";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { walletGroupsArray } from "../constants";
 import { sendEmail, shortenAddress } from "../utils";
 import { useInterval } from "../hooks/useInterval";
 import { CustomModal } from "../components/CustomModal";
 import { Client } from "@xmtp/react-sdk";
+import { ethers } from "ethers";
 
 //const walletAddress = "0x937C0d4a6294cdfa575de17382c7076b579DC176"; //xmtp tester wallet
 //const walletAddress = "0xdC25482eB1094F1F50119F45f799250b0a5622AF"; // tommys wallet
@@ -42,12 +41,12 @@ export default function Email() {
   useEffect(() => {
     const fetchData = async () => {
       if (!xmtpClient) {
-        /*   const _provider = new ethers.providers.Web3Provider(window.ethereum);
+        const _provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(_provider);
         const _xmtpClient = await Client.create(_provider.getSigner(), {
           env: "production",
         });
-        setXmtpClient(_xmtpClient); */
+        setXmtpClient(_xmtpClient);
       }
     };
     fetchData();
@@ -152,6 +151,7 @@ export default function Email() {
         count={count}
         provider={provider}
         recipientGroup={recipientGroup}
+        xmtpClient={xmtpClient}
       />
     </div>
   );

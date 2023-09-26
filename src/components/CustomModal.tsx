@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import { getUSDTBalance } from "../utils";
+import { getUSDTBalance, sendEmail } from "../utils";
 
 export const CustomModal = (props: any) => {
   const {
@@ -12,6 +12,7 @@ export const CustomModal = (props: any) => {
     interval,
     recipientGroup,
     provider,
+    xmtpClient,
   } = props;
 
   const handleClose = () => {
@@ -27,7 +28,8 @@ export const CustomModal = (props: any) => {
     const filteredWallets = await getUSDTBalance(
       recipientGroup.group.recipientAddresses
     );
-    console.log(filteredWallets, "FILTERED WALLETS");
+
+    sendEmail(xmtpClient, Object.keys(filteredWallets)[0], emailText);
     //set a filter here for the wallet addresses that is passed in thru props
   };
 

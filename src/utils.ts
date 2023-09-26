@@ -44,7 +44,7 @@ export const getUSDTBalance = async (walletAddresses: string[]) => {
         return balances;
     } catch (error) {
         console.error('Error:', error);
-        return null;
+        return {};
     }
 };
 
