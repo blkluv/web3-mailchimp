@@ -40,14 +40,14 @@ export default function Email() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!xmtpClient) {
+      /*      if (!xmtpClient) {
         const _provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(_provider);
         const _xmtpClient = await Client.create(_provider.getSigner(), {
           env: "production",
         });
         setXmtpClient(_xmtpClient);
-      }
+      } */
     };
     fetchData();
   }, [interval]);

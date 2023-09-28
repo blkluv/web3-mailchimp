@@ -1,0 +1,31 @@
+{
+  "name": "web3-mailchimp",
+  "version": "1.0.0",
+  "description": "Backend for web3-mailchimp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Liquality",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.22.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.6.1",
+    "express": "^4.17.1",
+    "express-jwt": "^8.4.1",
+    "fast-xml-parser": "^3.20.3",
+    "jsonwebtoken": "^9.0.0",
+    "mysql2": "^2.3.0",
+    "node-fetch": "^3.3.0",
+    "query-string": "^8.1.0",
+    "web3": "^1.8.1",
+    "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

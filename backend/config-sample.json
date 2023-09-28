@@ -1,0 +1,12 @@
+{
+  "database_connection": {
+    "host": "localhost",
+    "user": "root",
+    "database": "wav_game",
+    "password": "YOUR_DB_PASSWORD"
+  },
+
+  "rpc_urls": {
+    "mainnet_eth": "YOUR_RPC_URL_TO_ETH_MAINNET"
+  }
+}
