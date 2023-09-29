@@ -48,7 +48,7 @@ endpoints.deleteUser = {
 
 endpoints.scheduleTask = {
   url: "/v1/schedule",
-  method: "get",
+  method: "post",
   middleware: [],
   handler: scheduleHandler.read,
   description: "schedule a task",

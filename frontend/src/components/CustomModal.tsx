@@ -24,7 +24,6 @@ export const CustomModal = (props: any) => {
   };
 
   const handleSendToFiltered = async () => {
-    console.log(recipientGroup, "recip group");
     const filteredWallets = await getUSDTBalance(
       recipientGroup.group.recipientAddresses
     );

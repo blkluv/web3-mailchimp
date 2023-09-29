@@ -38,17 +38,18 @@ export default function Email() {
   const [interval, setInterval] = useState<number | null>(null);
   const [count, setCount] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
+  const [scheduleSelected, setScheduleSelected] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
-      /*      if (!xmtpClient) {
+      if (!xmtpClient) {
         const _provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(_provider);
         const _xmtpClient = await Client.create(_provider.getSigner(), {
           env: "production",
         });
         setXmtpClient(_xmtpClient);
-      } */
+      }
     };
     fetchData();
   }, [interval]);
@@ -63,8 +64,22 @@ export default function Email() {
   };
 
   const handleSendEmail = async () => {
-    if (emailText) {
-      setShowModal(true);
+    if (emailText && scheduleSelected) {
+      //setShowModal(true);
+      try {
+        const url = "http://localhost:5000/v1/schedule";
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Set the content type to JSON
+          },
+          body: xmtpClient, // Convert the data object to JSON string
+        });
+        console.log(response, "wats response??");
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
     } else {
       setErrorMsg("You have to write an email!");
       setTimeout(() => {
@@ -73,16 +88,17 @@ export default function Email() {
     }
   };
 
-  useInterval(
+  console.log(xmtpClient, "xmtpclkent");
+  /*   useInterval(
     () => {
       sendEmail(xmtpClient, walletAddress, emailText);
       //fetchApiData();
       setCount(count + 1);
     },
     isRunning ? interval : null
-  );
+  ); */
 
-  console.log(recipientGroup?.group.groupName, "groupname?");
+  console.log(scheduleSelected, "schedule selected??");
   const renderWalletGroups = () => {
     return walletGroupsArray.map((group, index) => (
       <div
@@ -129,19 +145,22 @@ export default function Email() {
         {" "}
         <div className="group-container ">{renderWalletGroups()} </div>
         <textarea
-          className=" form-control text-area-email flex-direction-row"
+          className="form-control text-area-email flex-direction-row"
           value={emailText ?? ""}
           onChange={(e) => handleEmailText(e.target.value)}
           placeholder="Write your email here..."
         />
         <button
           onClick={() => handleSendEmail()}
-          className=" btn-bottom btn btn-secondary"
+          className="btn-bottom btn btn-secondary"
         >
           <b>SEND</b>
         </button>
         {errorMsg && <p className="error-bottom">{errorMsg}</p>}
-        <Sidebar />
+        <Sidebar
+          setScheduleSelected={setScheduleSelected}
+          scheduleSelected={scheduleSelected}
+        />
       </div>
 
       <CustomModal

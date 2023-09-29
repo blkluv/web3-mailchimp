@@ -9,6 +9,7 @@ var scheduleHandler = {};
 //Add JWT token for session management
 
 scheduleHandler.read = function (req, res) {
+  console.log(req.body, "wats req and body?");
   var schedule = new Schedule();
   schedule.read().then(
     (user) => {

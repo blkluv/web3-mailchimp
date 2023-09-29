@@ -21,7 +21,6 @@ export const getUSDTBalance = async (walletAddresses: string[]) => {
 
     try {
         for (const walletAddress of walletAddresses) {
-            console.log(walletAddress, 'MORALIS wallet address')
             const apiUrl = `https://deep-index.moralis.io/api/v2.2/${walletAddress}/erc20?chain=${chain}&token_addresses%5B0%5D=${maticTokenContractAddressOnEthereum}`;
             const response = await fetch(apiUrl, { headers });
 
@@ -30,7 +29,6 @@ export const getUSDTBalance = async (walletAddresses: string[]) => {
             }
 
             const data = await response.json();
-            console.log(data, 'data?? MORALIS', data[0])
             if (data.length) {
                 const balance = Number(data[0].balance);
                 if (balance > 0) {
