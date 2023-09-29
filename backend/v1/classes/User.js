@@ -22,7 +22,8 @@ class User {
 
   async getUserByServiceProviderName(name) {
     return new Promise((resolve, reject) => {
-      MySQL.pool.getConnection((error, db) => {
+      resolve({ ok: "all OK" });
+      /*       MySQL.pool.getConnection((error, db) => {
         if (!error) {
           db.execute(
             "select * from `user` where serviceprovider_name = ?",
@@ -41,7 +42,7 @@ class User {
         } else {
           reject(new ApiError(500, error));
         }
-      });
+      }); */
     });
   }
 
@@ -111,8 +112,8 @@ class User {
   read = async (id) => {
     const user = this;
     const promise = new Promise((resolve, reject) => {
-      if (id) {
-        MySQL.pool.getConnection((error, db) => {
+      resolve({ ok: "ALL OK" });
+      /*   MySQL.pool.getConnection((error, db) => {
           if (!error) {
             db.execute(
               "select * from `user` where id = ?",
@@ -132,10 +133,7 @@ class User {
           } else {
             reject(new ApiError(500, error));
           }
-        });
-      } else {
-        reject(new ApiError(500, "Missing user id"));
-      }
+        }); */
     });
     return promise;
   };

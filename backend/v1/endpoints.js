@@ -48,9 +48,9 @@ endpoints.deleteUser = {
 
 endpoints.scheduleTask = {
   url: "/v1/schedule",
-  method: "post",
+  method: "get",
   middleware: [],
-  handler: scheduleHandler.create,
+  handler: scheduleHandler.read,
   description: "schedule a task",
 };
 module.exports = endpoints;
