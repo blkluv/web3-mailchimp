@@ -12,6 +12,7 @@ import { useInterval } from "../hooks/useInterval";
 import { CustomModal } from "../components/CustomModal";
 import { Client } from "@xmtp/react-sdk";
 import { ethers } from "ethers";
+import Sidebar from "../components/SidebarSelection";
 
 //const walletAddress = "0x937C0d4a6294cdfa575de17382c7076b579DC176"; //xmtp tester wallet
 //const walletAddress = "0xdC25482eB1094F1F50119F45f799250b0a5622AF"; // tommys wallet
@@ -140,6 +141,7 @@ export default function Email() {
           <b>SEND</b>
         </button>
         {errorMsg && <p className="error-bottom">{errorMsg}</p>}
+        <Sidebar />
       </div>
 
       <CustomModal

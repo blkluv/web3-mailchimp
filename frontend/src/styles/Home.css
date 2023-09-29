@@ -158,7 +158,6 @@
 
 .chat-container {
   width: 100%;
-  background-color: #272c34;
   height: 700px;
   position: relative;
 
@@ -167,8 +166,6 @@
   text-decoration: none;
   overflow: none;
   border: none;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
 }
 
 .group-container {
@@ -220,7 +217,7 @@
 
 .btn-bottom {
   position: absolute;
-  right: 10px;
+  right: 15%;
   bottom: 10px;
   width: 100px;
   height: 30px;
@@ -307,4 +304,13 @@
   position: absolute;
   top: 10px;
   left: 10px;
+}
+
+.sidebar {
+  width: 20%;
+  background: #a661b7;
+  height: 100%;
+  color: white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

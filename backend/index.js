@@ -10,7 +10,7 @@ const { addConnectionListener } = require("./v1/services/WebsocketService");
 //TODO: store better secret in hidden config file
 const secret = process.env.JWT_SECRET || "my-secret";
 
-var appPort = process.env.PORT || 3000;
+var appPort = process.env.PORT || 5000;
 
 app.use(
   cors(),
@@ -24,7 +24,7 @@ app.use(
 
 // requires access to lower ports
 console.log(
-  "\n\nIF THIS THROWS AN ERROR -\nMAKE SURE YOU ARE ALLOWED TO OPEN PORT 3000!\n\n"
+  "\n\nIF THIS THROWS AN ERROR -\nMAKE SURE YOU ARE ALLOWED TO OPEN PORT 5000!\n\n"
 );
 const server = app.listen(appPort);
 addConnectionListener(server);
